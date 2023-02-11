@@ -1,0 +1,26 @@
+<app-links></app-links>
+
+<br><hr>
+
+<table>
+    <thead>
+        <tr>
+            <td></td>
+            <td></td>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Desc</th>
+            <th>date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let product of productList">
+            <td><a href="#" (click)="onDelete($event, product.productId)">Delete</a></td>
+            <td><a href="" (click)="onUpdate($event, product.productId)">Update</a></td>
+            <td>{{product.productId}}</td>
+            <td>{{product.productName}}</td>
+            <td>{{product.productDesc}}</td>
+            <td>{{product.date}}</td>
+        </tr>
+    </tbody>
+</table>

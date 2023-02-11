@@ -1,0 +1,20 @@
+<app-links></app-links>
+
+<br><hr>
+
+<table>
+    <thead>
+        <tr class="red">
+          <th>Id</th>
+          <th>Name</th>
+          <th>Image</th>
+        </tr>
+      </thead>
+    <tbody>
+        <tr *ngFor="let img of imageList">
+            <td>{{img.id}} &nbsp;&nbsp;&nbsp;</td>
+            <td>{{img.name}}</td>
+            <td><img style="max-height: 100px;" src="{{img.path}}"/></td>
+        </tr>
+    </tbody>
+</table>

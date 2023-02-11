@@ -1,0 +1,262 @@
+<app-links></app-links>
+
+<br><hr>
+
+<form (submit)="addProduct()" [formGroup]="productForm">
+    <div class="form-group mr-sm-2">
+        <!-- <label for="productId"> Product Id </label> -->
+        <input 
+            placeholder="Product Id"
+            hidden
+            type="text"
+            name="productId"
+            formControlName="productId"
+            id="productId"
+            (blur)="logValidationErrors()"
+            [ngClass]="{'form-control': true,
+                        'is-invalid': formMessage.productId != '',
+                        'is-valid': productForm.get('productId')?.dirty && formMessage.productId == ''}">
+
+        <div class="invalid-feedback">
+            {{formMessage.name}}
+        </div>
+    </div>
+    <div class="form-group mr-sm-2">
+        <label for="name"> Name </label>
+        <input 
+            placeholder="Name"
+            type="text"
+            formControlName="name"
+            id="name"
+            (blur)="logValidationErrors()"
+            [ngClass]="{'form-control': true,
+                        'is-invalid': formMessage.name != '',
+                        'is-valid': productForm.get('name')?.dirty && formMessage.name == ''}">
+
+        <div class="invalid-feedback">
+            {{formMessage.name}}
+        </div>
+    </div>
+    <br>
+    <div class="form-group mr-sm-2">
+        <label for="categoryId">Category </label>
+        <select
+            placeholder="Category"
+            type="text"
+            formControlName="categoryId"
+            id="categoryId"
+            (blur)="logValidationErrors()"
+            [ngClass]="{'form-control': true,
+                        'is-invalid': formMessage.categoryId != '',
+                        'is-valid': productForm.get('categoryId')?.dirty && formMessage.categoryId == ''}">
+            <option *ngFor="let cat of categories" value={{cat.categoryId}}>{{cat.categoryName}}</option>
+        </select>
+        <div class="invalid-feedback">
+            {{formMessage.categoryId}}
+        </div>
+    </div>
+    <br>
+    <div class="form-group mr-sm-2">
+        <label for="descriptions"> Descriptions </label>
+        <textarea
+            placeholder="Descriptions"
+            type="text"
+            formControlName="descriptions"
+            id="descriptions"
+            (blur)="logValidationErrors()"
+            [ngClass]="{'form-control': true,
+                        'is-invalid': formMessage.descriptions != '',
+                        'is-valid': productForm.get('descriptions')?.dirty && formMessage.descriptions == ''}">
+
+        </textarea>
+        <div class="invalid-feedback">
+            {{formMessage.descriptions}}
+        </div>
+    </div>
+    <br>
+    <div class="form-group mr-sm-2">
+        <label for="details"> Details </label>
+        <textarea
+            placeholder="Details"
+            type="text"
+            formControlName="details"
+            id="details"
+            (blur)="logValidationErrors()"
+            [ngClass]="{'form-control': true,
+                        'is-invalid': formMessage.details != '',
+                        'is-valid': productForm.get('details')?.dirty && formMessage.details == ''}">
+
+        </textarea>
+
+        <div class="invalid-feedback">
+            {{formMessage.details}}
+        </div>
+    </div>
+    <br>
+    <div class="form-group mr-sm-2">
+        <label for="price">Price </label>
+        <input 
+            placeholder="price"
+            type="text"
+            formControlName="price"
+            id="price"
+            (blur)="logValidationErrors()"
+            [ngClass]="{'form-control': true,
+                        'is-invalid': formMessage.price != '',
+                        'is-valid': productForm.get('price')?.dirty && formMessage.price == ''}">
+
+        <div class="invalid-feedback">
+            {{formMessage.price}}
+        </div>
+    </div>
+    <br>
+    <div class="form-group mr-sm-2">
+        <label for="metaKeywords"> Meta Keywords </label>
+        <input 
+            placeholder="Meta Keywords"
+            type="text"
+            formControlName="metaKeywords"
+            id="metaKeywords"
+            (blur)="logValidationErrors()"
+            [ngClass]="{'form-control': true,
+                        'is-invalid': formMessage.metaKeywords != '',
+                        'is-valid': productForm.get('metaKeywords')?.dirty && formMessage.metaKeywords == ''}">
+
+        <div class="invalid-feedback">
+            {{formMessage.metaKeywords}}
+        </div>
+    </div>
+    <br>
+    <div class="form-group mr-sm-2">
+        <label for="pages"> Pages </label>
+        <select
+            placeholder="pages"
+            type="text"
+            formControlName="pages"
+            id="pages"
+            (blur)="logValidationErrors()"
+            [ngClass]="{'form-control': true,
+                        'is-invalid': formMessage.pages != '',
+                        'is-valid': productForm.get('pages')?.dirty && formMessage.pages == ''}">
+            <option *ngFor="let page of pages" value={{page.id}}>{{page.name}}</option>
+        </select>
+        <div class="invalid-feedback">
+            {{formMessage.pages}}
+        </div>
+    </div>
+    <br>
+    <div formArrayName="features">
+        <table class="table table-sm table-borderless">
+            <thead><tr>
+                <th>Feature Id</th>
+                <th>Feature</th>
+                <th>
+                    <button
+                        [disabled]="productFeaturesGroup.invalid" 
+                        class="btn btn-link float-right"
+                        type="button" 
+                        (click)="addFeatures()">
+                            Add Features</button>
+                </th></tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let feature of productFeaturesGroup['controls']; let i = index" [formGroupName]="i"> 
+                    <td>{{i+1}}</td>
+                    <td>
+                        <input type="text"
+                            style="width: 500px;"
+                            class="form-control"
+                            formControlName="details"
+                            (blur)="logValidationErrors()"
+                            [id]="'details'+i"
+                            [ngClass]="{'form-control': true,
+                                'is-invalid': feature.get('details').dirty && 
+                                              feature.get('details').invalid ,
+                                'is-valid': feature.get('details').dirty
+                                            && formMessage.details == ''}">
+                        <div class="invalid-feedback">
+                            {{formMessage.details}}
+                        </div>
+                    </td>
+                    <td><button
+                        [disabled]="productFeaturesGroup.controls.length <= 1" 
+                        class="btn btn-link float-right"
+                        type="button" 
+                        (click)="removeFeatures(i)">
+                            Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <div formArrayName="images">
+        <table class="table table-sm table-borderless">
+            <thead><tr>
+                <th>Image Id</th>
+                <th>Image Name</th>
+                <th>
+                    <button
+                        [disabled]="productFeaturesGroup.invalid" 
+                        class="btn btn-link float-right"
+                        type="button" 
+                        (click)="addImages()">
+                            Add Images</button>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let feature of productImagesGroup['controls']; let i = index" [formGroupName]="i"> 
+                        <td>
+                            <input type="text"
+                                class="form-control"
+                                formControlName="id"
+                                (blur)="logValidationErrors()"
+                                [id]="'id'+i"
+                                [ngClass]="{'form-control': true,
+                                    'is-invalid': feature.get('name').dirty && 
+                                                    feature.get('name').invalid ,
+                                    'is-valid': feature.get('name').dirty
+                                                && formMessage.name == ''}">
+                            <div class="invalid-feedback">
+                                {{formMessage.name}}
+                            </div>
+                        </td>
+                        <td>
+                            <input type="text"
+                                class="form-control"
+                                formControlName="name"
+                                (blur)="logValidationErrors()"
+                                [id]="'name'+i"
+                                [ngClass]="{'form-control': true,
+                                    'is-invalid': feature.get('name').dirty && 
+                                                feature.get('name').invalid ,
+                                    'is-valid': feature.get('name').dirty
+                                                && formMessage.name == ''}">
+                            <div class="invalid-feedback">
+                                {{formMessage.name}}
+                            </div>
+                        </td>
+                        <td><button
+                            [disabled]="productImagesGroup.controls.length <= 1" 
+                            class="btn btn-link float-right"
+                            type="button" 
+                            (click)="removeImages(i)">
+                                Remove</button></td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <button
+        class="btn btn-primary"
+        type="submit"
+        [disabled]="!productForm.valid">{{isUpdate() ? 'Update' : 'Add'}} Product</button>
+</form>
+
+<!-- <div>
+    <app-images-upload></app-images-upload>
+</div> -->
+<br>
+<iframe style="width: 100%;border: 0px;" src="http://pragatienter.com/web-node/jFileUpload.html"></iframe>
+<br>

@@ -1,0 +1,16 @@
+<app-links></app-links>
+
+<br><hr>
+
+<table>
+    <thead>
+        <th>Id</th>
+        <th>Name</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let cat of categoryList;">
+            <td>{{cat.categoryId}}</td>
+            <td>{{cat.categoryName}}</td>
+        </tr>
+    </tbody>
+</table>
